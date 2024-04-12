@@ -1,11 +1,13 @@
-drop table if EXISTS users;
-drop table if EXISTS taxpayer_info;
-drop table if EXISTS tax_returns;
+DROP TABLE IF EXISTS tax_returns;
+DROP TABLE IF EXISTS tax_forms;
+DROP TABLE IF EXISTS taxpayer_info;
+DROP TABLE IF EXISTS users;
+
 
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
-    email VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(100) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     last_login TIMESTAMP WITH TIME ZONE
 );
@@ -22,6 +24,15 @@ CREATE TABLE taxpayer_info (
     date_of_birth DATE,
     phone_number VARCHAR(20),
     address JSONB
+);
+
+CREATE TABLE tax_forms (
+    tax_form_id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(user_id),
+    status VARCHAR(15) DEFAULT 'pending',
+    submitted_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    form_type VARCHAR(5),
+    form_details JSONB
 );
 
 
