@@ -2,6 +2,10 @@ package com.jk.taxprep.taxprepsystem.model;
 
 import java.time.LocalDate;
 
+import org.hibernate.annotations.ColumnTransformer;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,22 +31,24 @@ public class TaxpayerInfo {
     private String lastName;
     private String occupation;
     private String ssn;
-    private LocalDate dateOfBirth;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate dob;
     private String phoneNumber;
 
-    @Column(columnDefinition = "jsonb")
+    @ColumnTransformer(write = "?::jsonb")
     private String address;
 
     public TaxpayerInfo() {}
 
-    public TaxpayerInfo(User user, String firstName, String middleName, String lastName, String occupation, String ssn, LocalDate dateOfBirth, String phoneNumber, String address) {
+    public TaxpayerInfo(User user, String firstName, String middleName, String lastName, String occupation, String ssn, LocalDate dob, String phoneNumber, String address) {
         this.user = user;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
         this.occupation = occupation;
         this.ssn = ssn;
-        this.dateOfBirth = dateOfBirth;
+        this.dob = dob;
         this.phoneNumber = phoneNumber;
         this.address = address;
     }
@@ -103,12 +109,12 @@ public class TaxpayerInfo {
         this.ssn = ssn;
     }
 
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
+    public LocalDate getDob() {
+        return dob;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
     }
 
     public String getPhoneNumber() {

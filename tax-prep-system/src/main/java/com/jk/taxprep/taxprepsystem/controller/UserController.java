@@ -1,5 +1,7 @@
 package com.jk.taxprep.taxprepsystem.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,13 +22,15 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public User getUserById(@PathVariable Long userId) {
-        return userService.getUserById(userId);
+    public ResponseEntity<User> getUserById(@PathVariable Long userId) {
+        User user = userService.getUserById(userId);
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping("/add")
-    public User addUser(@RequestBody User user) {
-        return userService.saveUser(user);
+    public ResponseEntity<User> addUser(@RequestBody User user) {
+        User newUser = userService.saveUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
 }

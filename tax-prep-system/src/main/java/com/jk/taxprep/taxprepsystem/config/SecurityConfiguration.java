@@ -1,26 +1,31 @@
-package com.jk.taxprep.taxprepsystem.config;
+// package com.jk.taxprep.taxprepsystem.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.web.SecurityFilterChain;
+// import java.util.List;
 
-@Configuration
-@EnableMethodSecurity(prePostEnabled = true)
-public class SecurityConfiguration {
+// import org.springframework.context.annotation.Bean;
+// import org.springframework.context.annotation.Configuration;
+// import org.springframework.security.config.Customizer;
+// import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+// import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+// import org.springframework.security.web.SecurityFilterChain;
+// import org.springframework.web.cors.CorsConfiguration;
+// import org.springframework.web.cors.CorsConfigurationSource;
+// import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeHttpRequests((authorizeRequests) ->
-                authorizeRequests
-                    .anyRequest().permitAll()
-            )
-            .httpBasic(Customizer.withDefaults());
+// @Configuration
+// @EnableMethodSecurity(prePostEnabled = true)
+// public class SecurityConfiguration {
 
-        return http.build();
+//     @Bean
+//     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//         http
+//             .authorizeHttpRequests((authorizeRequests) ->
+//                 authorizeRequests
+//                     .anyRequest().permitAll()
+//             )
+//             .httpBasic(Customizer.withDefaults());
 
-    }
-}
+//         return http.build();
+
+//     }
+// }
