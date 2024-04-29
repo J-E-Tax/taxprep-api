@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,16 +17,32 @@ public class User {
     private Long userId;
     private String email;
     private String password;
+    private String role;
     private LocalDateTime createdAt;
     private LocalDateTime lastLogin;
 
     public User() {}
 
-    public User(String email, String password, LocalDateTime createdAt, LocalDateTime lastLogin) {
+    public User(String email, String password, String role) {
         this.email = email;
         this.password = password;
+        this.role = role;
+    }
+
+    public User(String email, String password, String role, LocalDateTime createdAt) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
         this.createdAt = createdAt;
-        this.lastLogin = this.createdAt;
+    }
+
+
+    public User(String email, String password, String role, LocalDateTime createdAt, LocalDateTime lastLogin) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.createdAt = createdAt;
+        this.lastLogin = lastLogin;
     }
 
     public Long getUserId() {
@@ -52,6 +69,14 @@ public class User {
         this.password = password;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -68,5 +93,9 @@ public class User {
         this.lastLogin = lastLogin;
     }
 
-
+    // make sure that before saving to db, the createdAtis set to the local data time now
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 }
