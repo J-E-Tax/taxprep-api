@@ -32,6 +32,7 @@ public class TaxpayerInfo {
     private String occupation;
     private String ssn;
 
+    @Column(name = "date_of_birth")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dob;
     private String phoneNumber;

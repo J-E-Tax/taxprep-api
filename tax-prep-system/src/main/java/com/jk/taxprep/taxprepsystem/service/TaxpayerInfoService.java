@@ -21,6 +21,10 @@ public class TaxpayerInfoService {
         return taxpayerInfoRepository.findById(taxpayerId).orElse(null);
     }
 
+    public TaxpayerInfo getTaxpayerInfoByUserId(Long userId) {
+        return taxpayerInfoRepository.findByUser_UserId(userId);
+    }
+
     public TaxpayerInfo updateTaxpayerInfo(TaxpayerInfo taxpayerInfo) {
         return taxpayerInfoRepository.save(taxpayerInfo);
     }
