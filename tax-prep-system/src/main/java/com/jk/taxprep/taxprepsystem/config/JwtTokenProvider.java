@@ -12,6 +12,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
 import com.jk.taxprep.taxprepsystem.service.UserService;
@@ -37,12 +38,15 @@ public class JwtTokenProvider {
         String username;
 
         // If the principal is an instance of UserDetails it gets the username from there. If it's a simple string (Thinking of it as a OAuth2 username), it uses the string directly.
-        if (principal instanceof UserDetails) {
+        if (principal instanceof OAuth2User) {
+            OAuth2User oauthUser = (OAuth2User) principal;
+            username = oauthUser.getAttribute("email");
+        } else if (principal instanceof UserDetails) {
             username = ((UserDetails) principal).getUsername();
         } else if (principal instanceof String) {
             username = (String) principal;
         } else {
-            throw new IllegalArgumentException("Principal type is not supported");
+            throw new IllegalArgumentException("Principal not supported");
         }
 
         Long userId = userService.findUserIdByEmail(username);
