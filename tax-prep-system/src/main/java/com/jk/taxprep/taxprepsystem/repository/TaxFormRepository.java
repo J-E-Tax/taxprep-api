@@ -8,7 +8,9 @@ import com.jk.taxprep.taxprepsystem.model.TaxForm;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface TaxFormRepository extends JpaRepository<TaxForm, Long>{
 
 
@@ -20,8 +22,10 @@ public interface TaxFormRepository extends JpaRepository<TaxForm, Long>{
     // @Query("SELECT * FROM tax_forms tf WHERE tf.user_id = :userId")
     // List<TaxForm> findByUserId(@Param("userId") int user);
 
-    
+
 
     List<TaxForm> findByUser(int userId);
+
+    List<TaxForm> findByUser(Long userId);
 
 }
