@@ -41,7 +41,7 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://ec2-54-147-152-76.compute-1.amazonaws.com:5173", "http://ec2-54-147-152-76.compute-1.amazonaws.com:5173", "http://54.147.152.76:5173", "http://ericschang.net:5173"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowCredentials(true); // This allows credentials to be included in the CORS requests such as cookies
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept"));
