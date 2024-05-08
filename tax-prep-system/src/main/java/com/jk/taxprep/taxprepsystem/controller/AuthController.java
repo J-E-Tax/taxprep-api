@@ -75,16 +75,16 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/logout")
-    public void logout(HttpServletResponse response) {
+    // @GetMapping("/logout")
+    // public void logout(HttpServletResponse response) {
 
-        Cookie cookie = new Cookie("token", null);
-        cookie.setHttpOnly(false);
-        cookie.setPath("/");
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
+    //     Cookie cookie = new Cookie("token", null);
+    //     cookie.setHttpOnly(false);
+    //     cookie.setPath("/");
+    //     cookie.setMaxAge(0);
+    //     response.addCookie(cookie);
 
-    }
+    // }
 
 }
 
