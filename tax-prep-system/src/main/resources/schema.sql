@@ -36,13 +36,14 @@ CREATE TABLE tax_forms (
     form_details JSONB
 );
 
-
 CREATE TABLE tax_returns (
     tax_return_id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(user_id),
     total_income NUMERIC(10, 2),
-    federal_tax_due_return NUMERIC(10, 2),
+    total_deductions NUMERIC(10, 2),
+    taxable_income NUMERIC(10, 2),
+    total_federal_tax NUMERIC(10, 2),
+    tax_refund_or_due NUMERIC(10, 2),
     status VARCHAR(15) DEFAULT 'pending',
-    submitted_at TIMESTAMP WITH TIME ZONE,
-    summary JSONB
+    submitted_at TIMESTAMP WITH TIME ZONE
 );

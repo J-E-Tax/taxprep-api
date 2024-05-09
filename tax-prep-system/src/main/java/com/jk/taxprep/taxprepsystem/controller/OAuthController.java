@@ -97,6 +97,11 @@ public class OAuthController {
             String errorMessage = URLEncoder.encode(e.getMessage(), "UTF-8");
             return new RedirectView("http://localhost:5173/login?error=" + errorMessage);
         }
+        //     return new RedirectView("http://ericschang.net:5173/main");
+        // } catch (Exception e) {
+        //     String errorMessage = URLEncoder.encode(e.getMessage(), "UTF-8");
+        //     return new RedirectView("http://ericschang.net:5173/login?error=" + errorMessage);
+        // }
     }
 
 }
