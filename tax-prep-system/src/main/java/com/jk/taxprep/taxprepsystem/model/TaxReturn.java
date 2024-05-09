@@ -98,7 +98,6 @@ public class TaxReturn {
         this.status = status;
     }
 
-
 }
 
 

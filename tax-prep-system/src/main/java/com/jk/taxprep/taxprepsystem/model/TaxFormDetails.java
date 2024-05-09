@@ -3,6 +3,7 @@ package com.jk.taxprep.taxprepsystem.model;
 import java.math.BigDecimal;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -10,19 +11,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.io.IOException;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TaxFormDetails {
     @JsonProperty("a")
     private String ssn;
     @JsonProperty("b")
     private String employerIdentificationNumber;
-    @JsonProperty("c")
-    private String employerDetails;
     @JsonProperty("d")
     private String controlNumber;
     @JsonProperty("e")
     private String employeeName;
-    @JsonProperty("f")
-    private String employeeAddress;
     @JsonProperty("l1")
     private BigDecimal wages;
     @JsonProperty("l2")
@@ -39,26 +37,29 @@ public class TaxFormDetails {
     private BigDecimal socialSecurityTips;
     @JsonProperty("l8")
     private BigDecimal allocatedTips;
+    @JsonProperty("l9")
+    private String nothingField;
     @JsonProperty("l10")
     private BigDecimal dependentCareBenefits;
     @JsonProperty("l11")
     private BigDecimal nonqualifiedPlans;
-    @JsonProperty("l12")
-    private Map<String, BigDecimal> additionalTaxes;
-    @JsonProperty("l13")
-    private Map<String, Boolean> checkboxes;
-    @JsonProperty("l14")
-    private String otherInfo;
+    @JsonProperty("l12a")
+    private BigDecimal taxA;
+    @JsonProperty("l12b")
+    private BigDecimal taxB;
+    @JsonProperty("l12c")
+    private BigDecimal taxC;
+    @JsonProperty("l12d")
+    private BigDecimal taxD;
+
 
     public TaxFormDetails() {}
 
-    public TaxFormDetails(String ssn, String employerIdentificationNumber, String employerDetails, String controlNumber, String employeeName, String employeeAddress, BigDecimal wages, BigDecimal federalIncomeTaxWithheld, BigDecimal socialSecurityWages, BigDecimal socialSecurityTaxWithheld, BigDecimal medicareWagesAndTips, BigDecimal medicareTaxWithheld, BigDecimal socialSecurityTips, BigDecimal allocatedTips, BigDecimal dependentCareBenefits, BigDecimal nonqualifiedPlans, Map<String, BigDecimal> additionalTaxes, Map<String, Boolean> checkboxes, String otherInfo) {
+    public TaxFormDetails(String ssn, String employerIdentificationNumber, String controlNumber, String employeeName, BigDecimal wages, BigDecimal federalIncomeTaxWithheld, BigDecimal socialSecurityWages, BigDecimal socialSecurityTaxWithheld, BigDecimal medicareWagesAndTips, BigDecimal medicareTaxWithheld, BigDecimal socialSecurityTips, BigDecimal allocatedTips, String nothingField, BigDecimal dependentCareBenefits, BigDecimal nonqualifiedPlans, BigDecimal taxA, BigDecimal taxB, BigDecimal taxC, BigDecimal taxD) {
         this.ssn = ssn;
         this.employerIdentificationNumber = employerIdentificationNumber;
-        this.employerDetails = employerDetails;
         this.controlNumber = controlNumber;
         this.employeeName = employeeName;
-        this.employeeAddress = employeeAddress;
         this.wages = wages;
         this.federalIncomeTaxWithheld = federalIncomeTaxWithheld;
         this.socialSecurityWages = socialSecurityWages;
@@ -67,11 +68,13 @@ public class TaxFormDetails {
         this.medicareTaxWithheld = medicareTaxWithheld;
         this.socialSecurityTips = socialSecurityTips;
         this.allocatedTips = allocatedTips;
+        this.nothingField = nothingField;
         this.dependentCareBenefits = dependentCareBenefits;
         this.nonqualifiedPlans = nonqualifiedPlans;
-        this.additionalTaxes = additionalTaxes;
-        this.checkboxes = checkboxes;
-        this.otherInfo = otherInfo;
+        this.taxA = taxA;
+        this.taxB = taxB;
+        this.taxC = taxC;
+        this.taxD = taxD;
     }
 
     // This method is used to convert the JSON string to a TaxFormDetails object
@@ -95,14 +98,6 @@ public class TaxFormDetails {
         this.employerIdentificationNumber = employerIdentificationNumber;
     }
 
-    public String getEmployerDetails() {
-        return employerDetails;
-    }
-
-    public void setEmployerDetails(String employerDetails) {
-        this.employerDetails = employerDetails;
-    }
-
     public String getControlNumber() {
         return controlNumber;
     }
@@ -117,14 +112,6 @@ public class TaxFormDetails {
 
     public void setEmployeeName(String employeeName) {
         this.employeeName = employeeName;
-    }
-
-    public String getEmployeeAddress() {
-        return employeeAddress;
-    }
-
-    public void setEmployeeAddress(String employeeAddress) {
-        this.employeeAddress = employeeAddress;
     }
 
     public BigDecimal getWages() {
@@ -191,6 +178,14 @@ public class TaxFormDetails {
         this.allocatedTips = allocatedTips;
     }
 
+    public String getNothingField() {
+        return nothingField;
+    }
+
+    public void setNothingField(String nothingField) {
+        this.nothingField = nothingField;
+    }
+
     public BigDecimal getDependentCareBenefits() {
         return dependentCareBenefits;
     }
@@ -207,29 +202,36 @@ public class TaxFormDetails {
         this.nonqualifiedPlans = nonqualifiedPlans;
     }
 
-    public Map<String, BigDecimal> getAdditionalTaxes() {
-        return additionalTaxes;
+    public BigDecimal getTaxA() {
+        return taxA;
     }
 
-    public void setAdditionalTaxes(Map<String, BigDecimal> additionalTaxes) {
-        this.additionalTaxes = additionalTaxes;
+    public void setTaxA(BigDecimal taxA) {
+        this.taxA = taxA;
     }
 
-    public Map<String, Boolean> getCheckboxes() {
-        return checkboxes;
+    public BigDecimal getTaxB() {
+        return taxB;
     }
 
-    public void setCheckboxes(Map<String, Boolean> checkboxes) {
-        this.checkboxes = checkboxes;
+    public void setTaxB(BigDecimal taxB) {
+        this.taxB = taxB;
     }
 
-    public String getOtherInfo() {
-        return otherInfo;
+    public BigDecimal getTaxC() {
+        return taxC;
     }
 
-    public void setOtherInfo(String otherInfo) {
-        this.otherInfo = otherInfo;
+    public void setTaxC(BigDecimal taxC) {
+        this.taxC = taxC;
     }
 
+    public BigDecimal getTaxD() {
+        return taxD;
+    }
+
+    public void setTaxD(BigDecimal taxD) {
+        this.taxD = taxD;
+    }
 
 }
