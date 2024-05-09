@@ -57,7 +57,7 @@ public class SecurityConfiguration {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(registry -> {
-                registry.requestMatchers("/users/register", "/login", "/accessToken").permitAll(); // These endpoints don't require authentication
+                registry.requestMatchers("/users/register", "/login", "/accessToken").permitAll(); // These endpoints don't require authentication, only end point related to authentication is permitted, all other endpoints require authentication
                 registry.requestMatchers("/admin/**").hasRole("ADMIN");
                 registry.requestMatchers("/user/**").hasRole("USER");
                 registry.anyRequest().authenticated(); // All other endpoints require authentication

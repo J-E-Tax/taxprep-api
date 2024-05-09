@@ -1,7 +1,6 @@
 package com.jk.taxprep.taxprepsystem.service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -29,7 +28,7 @@ public class TaxReturnService {
     }
 
     @Transactional
-    public TaxReturn calculatorTaxReturn(TaxFormDetails taxFormDetails, long userId) {
+    public TaxReturn calculatorTaxReturn(TaxFormDetails taxFormDetails, long userId, TaxReturn existingTaxReturn) {
 
         BigDecimal totalIncome = taxFormDetails.getWages();
         BigDecimal totalDeductions = calculateStandardDeduction();
@@ -37,45 +36,48 @@ public class TaxReturnService {
         BigDecimal totalFederalTax = calculateFederalTax(taxableIncome);
         BigDecimal taxRefundOrDue = taxFormDetails.getFederalIncomeTaxWithheld().subtract(totalFederalTax);
 
-        TaxReturn taxReturn = new TaxReturn();
-        taxReturn.setUserId(userId);
-        taxReturn.setTotalIncome(totalIncome);
-        taxReturn.setTotalDeductions(totalDeductions);
-        taxReturn.setTaxableIncome(taxableIncome);
-        taxReturn.setTotalFederalTax(totalFederalTax);
-        taxReturn.setTaxRefundOrDue(taxRefundOrDue);
-        taxReturn.setStatus("PENDING");
+        if (existingTaxReturn == null) {
+            existingTaxReturn = new TaxReturn();
+            existingTaxReturn.setStatus("PENDING");
+        }
 
-        return taxReturn;
+        existingTaxReturn.setUserId(userId);
+        existingTaxReturn.setTotalIncome(totalIncome);
+        existingTaxReturn.setTotalDeductions(totalDeductions);
+        existingTaxReturn.setTaxableIncome(taxableIncome);
+        existingTaxReturn.setTotalFederalTax(totalFederalTax);
+        existingTaxReturn.setTaxRefundOrDue(taxRefundOrDue);
+        System.out.println("TaxReturn UserId after setting: " + existingTaxReturn.getUserId());
+
+        return existingTaxReturn;
 
     }
 
     @Transactional
-    public List<TaxReturn> calculateTaxReturnsForUsers(Long userId) throws JsonMappingException, IOException, JsonProcessingException {
+    public TaxReturn calculateTaxReturnsForUser(Long userId) throws JsonMappingException, IOException, JsonProcessingException {
+        System.out.println("Received userId: " + userId);
         List<TaxForm> taxForms = taxFormRepository.findByUser(userId);
-        List<TaxReturn> taxReturns = new ArrayList<>();
+        if (taxForms.isEmpty()) {
+            throw new IllegalArgumentException("No tax forms found: " + userId);
+        }
+        TaxReturn taxReturn;
+        TaxReturn existingTaxReturn = taxReturnRepository.findByUserId(userId).orElse(null);
+
+        // This is used to check if the tax return already exists for the user
+        if (existingTaxReturn != null) {
+            taxReturn = existingTaxReturn;
+        } else {
+            taxReturn = new TaxReturn();
+        }
 
         // This is used to alculate tax return for each tax form per user
         for (TaxForm taxForm : taxForms) {
             TaxFormDetails details = TaxFormDetails.fromJson(taxForm.getFormDetails());
-            TaxReturn taxReturn = calculatorTaxReturn(details, userId);
-            taxReturns.add(taxReturn);
+            taxReturn = calculatorTaxReturn(details, userId, taxReturn);
         }
+        System.out.println("Saving TaxReturn with UserID: " + taxReturn.getUserId());
 
-        return taxReturnRepository.saveAll(taxReturns);
-    }
-
-    public List<TaxReturn> findAllTaxForms(Long userId) throws JsonMappingException, IOException, JsonProcessingException {
-        List<TaxForm> taxForms = taxFormRepository.findByUser(userId);
-        List<TaxReturn> taxReturns = new ArrayList<>();
-
-        for (TaxForm taxForm : taxForms) {
-            TaxFormDetails details = TaxFormDetails.fromJson(taxForm.getFormDetails());
-            TaxReturn taxReturn = calculatorTaxReturn(details, userId);
-            taxReturns.add(taxReturn);
-        }
-
-        return taxReturns;
+        return taxReturnRepository.save(taxReturn);
     }
 
     // Standard deduction
