@@ -14,8 +14,6 @@ public class TaxFormService {
     @Autowired
     TaxFormRepository taxFormRepository;
 
-    
-
     public List<TaxForm> findAllTaxForms(){
         return taxFormRepository.findAll();
     }
