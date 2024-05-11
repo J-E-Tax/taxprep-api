@@ -1,49 +1,26 @@
-## Workflows
+# J&E TAX PRO
+Table of Contents
+- [Description](#description)
+- [Author](#author)
+- [Built With](#built-with)
 
-Git
-## update your main branch
-git checkout main
+ ## Description
+This repository hosts the backend services for our tax filing application, handling data processing, authentication, and secure data storage. It provides RESTful APIs for the front-end to interact with user data and tax information.
 
-git pull --rebase upstream main OR git pull origin main
+## Author
 
-## start work on a feature
-git checkout -b feature-branch (to create a "feature" branch to keep it away from the main branch, which keeps the work isolated and organized.)
+- [**Eric Chang**](https://github.com/ESC8504)
+- [**Joseph Sam**](https://github.com/Joseph-Jay-Sam)
 
-# write code, commit
-git add . (for all files)
+## Built With
+![](https://img.shields.io/badge/-Java-007396?style=flat-square&logo=java&logoColor=white)
+![](https://img.shields.io/badge/-Spring_Boot-6DB33F?style=flat-square&logo=spring-boot&logoColor=white)
+![Spring Security](https://img.shields.io/badge/-Spring_Security-6DB33F?style=flat-square&logo=spring-security&logoColor=white)
+![](https://img.shields.io/badge/-PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)
+![OAuth2](https://img.shields.io/badge/-OAuth2-3E337F?style=flat-square&logo=oauth&logoColor=white)
+![JUnit](https://img.shields.io/badge/-JUnit-25A162?style=flat-square&logo=junit5&logoColor=white)
+![JWT](https://img.shields.io/badge/-JWT_Token-000000?style=flat-square&logo=json-web-tokens&logoColor=white)
+![Docker](https://img.shields.io/badge/-Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
+![AWS](https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=amazon-aws&logoColor=white)
 
-git add xxx.jsx (for xxx.jsx only)
 
-git commit -m “”
-
-## push to a feature branch
-git push origin feature-branch or git push -u origin feature-branch (the -u flag adds it as a remote tracking branch)
-
-## make a pull request on GitHub
-Go on to the github organization repo and make a pull request
-## if pull request is rejected
-## fix bugs, commit
-git add .
-
-git commit
-
-git pull --rebase upstream main
-
-git push origin feature-branch
-
-## make a pull request on GitHub
-
-## if pull request is accepted
-git checkout master
-
-git pull --rebase upstream main
-
-git branch -d feature-branch
-
-## review team member’s pull request (branch)
-If the team member wanted, they could pull eric-feature into their local repository and work on it on his own. Any commits he added would also show up in the pull request. This process will results in a merge commit. Once the team member is ready to accept the pull request, they needs to merge the feature into the stable project (this can be done by any one on the team)
-
-They can do to review the branch:
-git fetch origin
-
-git checkout eric-feature
